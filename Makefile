@@ -19,8 +19,9 @@ RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
 		${PYTHON_PKGNAMEPREFIX}protobuf>=3.2.0:devel/py-protobuf
 
 USE_GITHUB=	yes
+GH_TUPLE=	amutu:tensorflow_third_party:9c2d26b:tf/tensorflow_third_party
 USES=		python:2.7+ shebangfix
-BAZEL_BOOT=	--output_user_root=${WRKDIR}/bazel_ot --batch
+BAZEL_BOOT=	--output_user_root=${WRKSRC}/bazel_ot --batch
 BAZEL_COPT=
 
 SHEBANG_LANG=	python
@@ -41,7 +42,13 @@ BAZEL_COPT+=	--copt=-Wno-c++11-narrowing
 .endif
 
 post-patch:
-	${REINPLACE_CMD} "s#bazel \([cf]\)#bazel ${BAZEL_BOOT} \1#g" ${WRKSRC}/configure
+	(cd ${WRKSRC} && \
+	${REINPLACE_CMD} "s#bazel \([cf]\)#echo bazel ${BAZEL_BOOT} \1#g" \
+	${WRKSRC}/configure && \
+	${REINPLACE_CMD} "s#tensorflow_third_party#${WRKSRC}/&#g" \
+	${WRKSRC}/WORKSPACE && \
+	${REINPLACE_CMD} "s#tensorflow_third_party#${WRKSRC}/&#g" \
+	tensorflow/workspace.bzl)
 
 do-configure:
 	(cd ${WRKSRC} && ${SETENV} \
@@ -54,26 +61,20 @@ do-configure:
 		TF_NEED_CUDA=N \
 		PYTHON_LIB_PATH="${PYTHON_SITELIBDIR}" \
 	       	./configure)
-	(cd ${WRKDIR}/bazel_ot/[^i]*/ && \
-	${REINPLACE_CMD} -e 's/\([ :]\)m\(..\)or(/\1_m\2or(/g' \
-	external/protobuf/src/google/protobuf/compiler/plugin.pb.h && \
-	${REINPLACE_CMD} -e 's/->m\(..\)or(/->_m\1or(/g' \
-	-e 's/\([.:]\)m\(..\)or(/\1_m\2or(/g' \
-	external/protobuf/src/google/protobuf/compiler/plugin.pb.cc && \
-	${REINPLACE_CMD} -e 's/#define GPR_HAVE_IP_PKTINFO 1/\/\/&/' \
-	external/grpc/include/grpc/impl/codegen/port_platform.h)
 
 do-build:
-	(cd ${WRKSRC} && bazel ${BAZEL_BOOT} build ${BAZEL_COPT} --config=opt \
+	(cd ${WRKSRC} && bazel ${BAZEL_BOOT} info && \
+		bazel ${BAZEL_BOOT} build ${BAZEL_COPT} --config=opt \
 		//tensorflow/tools/pip_package:build_pip_package --verbose_failures)
 	(cd ${WRKSRC} && ${SETENV} TMPDIR=${WRKDIR} \
 	      	bazel-bin/tensorflow/tools/pip_package/build_pip_package \
 		${WRKDIR}/whl)
 
 do-install:
-	${MKDIR} ${STAGEDIR}/${PYTHON_SITELIBDIR}
-	${MKDIR} ${WRKDIR}/tmp
-	${UNZIP_NATIVE_CMD} -d ${WRKDIR}/tmp ${WRKDIR}/whl/${PORTNAME}-${PORTVERSION}-*.whl
+	@${MKDIR} ${STAGEDIR}/${PYTHON_SITELIBDIR}
+	@${MKDIR} ${WRKDIR}/tmp
+	@${UNZIP_NATIVE_CMD} -d ${WRKDIR}/tmp ${WRKDIR}/whl/${PORTNAME}-${PORTVERSION}-*.whl
+	@${FIND} ${WRKDIR}/tmp -name "*.so*" | ${XARGS} ${STRIP_CMD}
 	cd ${WRKDIR}/tmp && ${COPYTREE_SHARE} ${PORTNAME}-${PORTVERSION}.dist-info \
 		${STAGEDIR}${PYTHON_SITELIBDIR}
 	cd ${WRKDIR}/tmp/${PORTNAME}-${PORTVERSION}.data/purelib && \
