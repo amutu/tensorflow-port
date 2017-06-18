@@ -71,9 +71,10 @@ do-build:
 		${WRKDIR}/whl)
 
 do-install:
-	${MKDIR} ${STAGEDIR}/${PYTHON_SITELIBDIR}
-	${MKDIR} ${WRKDIR}/tmp
-	${UNZIP_NATIVE_CMD} -d ${WRKDIR}/tmp ${WRKDIR}/whl/${PORTNAME}-${PORTVERSION}-*.whl
+	@${MKDIR} ${STAGEDIR}/${PYTHON_SITELIBDIR}
+	@${MKDIR} ${WRKDIR}/tmp
+	@${UNZIP_NATIVE_CMD} -d ${WRKDIR}/tmp ${WRKDIR}/whl/${PORTNAME}-${PORTVERSION}-*.whl
+	@${FIND} ${WRKDIR}/tmp -name "*.so*" | ${XARGS} ${STRIP_CMD}
 	cd ${WRKDIR}/tmp && ${COPYTREE_SHARE} ${PORTNAME}-${PORTVERSION}.dist-info \
 		${STAGEDIR}${PYTHON_SITELIBDIR}
 	cd ${WRKDIR}/tmp/${PORTNAME}-${PORTVERSION}.data/purelib && \
