@@ -20,7 +20,7 @@ RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
 
 USE_GITHUB=	yes
 USES=		python:2.7+ shebangfix
-BAZEL_BOOT=	--output_user_root=${WRKDIR}/bazel_ot --batch
+BAZEL_BOOT=	--output_user_root=${WRKSRC}/bazel_ot --batch
 BAZEL_COPT=
 
 SHEBANG_LANG=	python
@@ -54,7 +54,7 @@ do-configure:
 		TF_NEED_CUDA=N \
 		PYTHON_LIB_PATH="${PYTHON_SITELIBDIR}" \
 	       	./configure)
-	(cd ${WRKDIR}/bazel_ot/[^i]*/ && \
+	(cd ${WRKSRC}/bazel_ot/[^i]*/ && \
 	${REINPLACE_CMD} -e 's/\([ :]\)m\(..\)or(/\1_m\2or(/g' \
 	external/protobuf/src/google/protobuf/compiler/plugin.pb.h && \
 	${REINPLACE_CMD} -e 's/->m\(..\)or(/->_m\1or(/g' \
