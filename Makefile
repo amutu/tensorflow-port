@@ -44,9 +44,9 @@ BAZEL_COPT+=	--copt=-Wno-c++11-narrowing
 post-patch:
 	(cd ${WRKSRC} && \
 	${REINPLACE_CMD} "s#bazel \([cf]\)#echo bazel ${BAZEL_BOOT} \1#g" \
-	${WRKSRC}/configure && \
+	configure && \
 	${REINPLACE_CMD} "s#tensorflow_third_party#${WRKSRC}/&#g" \
-	${WRKSRC}/WORKSPACE && \
+	WORKSPACE && \
 	${REINPLACE_CMD} "s#tensorflow_third_party#${WRKSRC}/&#g" \
 	tensorflow/workspace.bzl)
 
