@@ -24,12 +24,11 @@ BAZEL_BOOT=	--output_user_root=${WRKDIR}/bazel_ot --batch
 BAZEL_COPT=
 
 SHEBANG_LANG=	python
-python_OLD_CMD=	"/usr/bin/env python"
 SHEBANG_GLOB=	*.py
 
 .include <bsd.port.pre.mk>
 
-.if ${OSREL:C/\..*//} == "10"
+.if ${OSREL:R} == "10"
 BUILD_DEPENDS+=	bazel:devel/bazel_clang38
 .else
 BUILD_DEPENDS+=	bazel:devel/bazel
@@ -41,7 +40,7 @@ BUILD_DEPENDS+=	bazel:devel/bazel
 BAZEL_COPT+=	--copt=-Wno-c++11-narrowing
 .endif
 
-do-patch:
+post-patch:
 	${REINPLACE_CMD} "s#bazel \([cf]\)#bazel ${BAZEL_BOOT} \1#g" ${WRKSRC}/configure
 
 do-configure:
