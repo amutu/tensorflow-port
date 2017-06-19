@@ -1,0 +1,1 @@
+grep "^\ *name = " $1 | gsed '/name/i\local_repository(' | gsed '/name/a\ ' | gsed '/^ $/a\)' | gsed '/)/a\ ' | gsed '/name = .*",/{h;n;g;s/name = "/path = "tensorflow_third_party\//;s/,//g}' | gsed 's/^ $//'
