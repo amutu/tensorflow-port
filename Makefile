@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	tensorflow
-PORTVERSION=	1.1.0
+PORTVERSION=	1.2.0
 DISTVERSIONPREFIX=	v
 CATEGORIES=	science python
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
@@ -41,7 +41,7 @@ BAZEL_COPT+=	--copt=-Wno-c++11-narrowing
 .endif
 
 post-patch:
-	${REINPLACE_CMD} "s#bazel \([cf]\)#bazel ${BAZEL_BOOT} \1#g" ${WRKSRC}/configure
+	${REINPLACE_CMD} "s#bazel \([cf]\)#echo comment bazel ${BAZEL_BOOT} \1#g" ${WRKSRC}/configure
 
 do-configure:
 	(cd ${WRKSRC} && ${SETENV} \
@@ -53,7 +53,13 @@ do-configure:
 	       	TF_NEED_OPENCL=N \
 		TF_NEED_CUDA=N \
 		PYTHON_LIB_PATH="${PYTHON_SITELIBDIR}" \
-	       	./configure)
+		TF_NEED_VERBS=N \
+		./configure && ${SETENV} \
+		PYTHON_BIN_PATH=${PYTHON_CMD} \
+		PYTHON_LIB_PATH="${PYTHON_SITELIBDIR}" \
+		bazel ${BAZEL_BOOT} \
+		fetch "//tensorflow/... -//tensorflow/contrib/nccl/... -//tensorflow/examples/android/...")
+pre-build:
 	(cd ${WRKSRC}/bazel_ot/[^i]*/ && \
 	${REINPLACE_CMD} -e 's/\([ :]\)m\(..\)or(/\1_m\2or(/g' \
 	external/protobuf/src/google/protobuf/compiler/plugin.pb.h && \
