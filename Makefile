@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	tensorflow
-PORTVERSION=	1.1.0
+PORTVERSION=	1.2.0
 DISTVERSIONPREFIX=	v
 CATEGORIES=	science python
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
@@ -19,7 +19,7 @@ RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
 		${PYTHON_PKGNAMEPREFIX}protobuf>=3.2.0:devel/py-protobuf
 
 USE_GITHUB=	yes
-GH_TUPLE=	amutu:tensorflow_third_party:9c2d26b:tf/tensorflow_third_party
+GH_TUPLE=	amutu:tensorflow_third_party:c528072:tf/tensorflow_third_party
 USES=		python:2.7+ shebangfix
 BAZEL_BOOT=	--output_user_root=${WRKSRC}/bazel_ot --batch
 BAZEL_COPT=
@@ -60,6 +60,7 @@ do-configure:
 	       	TF_NEED_OPENCL=N \
 		TF_NEED_CUDA=N \
 		PYTHON_LIB_PATH="${PYTHON_SITELIBDIR}" \
+		TF_NEED_VERBS=N \
 	       	./configure)
 
 do-build:
