@@ -16,7 +16,15 @@ BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}wheel>=0.29.0:devel/py-wheel \
 		${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
 		bash:shells/bash
 RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
-		${PYTHON_PKGNAMEPREFIX}protobuf>=3.2.0:devel/py-protobuf
+		${PYTHON_PKGNAMEPREFIX}markdown>=2.2.0:textproc/py-markdown \
+		${PYTHON_PKGNAMEPREFIX}bleach>=1.4.2:www/py-bleach \
+		${PYTHON_PKGNAMEPREFIX}html5lib>=0.9999999:www/py-html5lib \
+		${PYTHON_PKGNAMEPREFIX}protobuf>=3.2.0:devel/py-protobuf \
+		${PYTHON_PKGNAMEPREFIX}wheel>=0.29.0:devel/py-wheel \
+		${PYTHON_PKGNAMEPREFIX}mock>=1.3.0:devel/py-mock \
+		${PYTHON_PKGNAMEPREFIX}six>=1.10.0:devel/py-six \
+		${PYTHON_PKGNAMEPREFIX}backports.weakref>=0:devel/py-backports.weakref \
+		${PYTHON_PKGNAMEPREFIX}werkzeug>=0.11.10:www/py-werkzeug
 
 USE_GITHUB=	yes
 GH_TUPLE=	amutu:tensorflow_third_party:c528072:tf/tensorflow_third_party
