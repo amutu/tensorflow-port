@@ -7,6 +7,9 @@ DISTVERSIONPREFIX=	v
 CATEGORIES=	science python
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
 
+PATCH_SITES=	https://raw.githubusercontent.com/amutu/tensorflow-port/a730557780159372986f4fcae30f6e396d14060d/files/
+PATCHFILES=	patch-WORKSPACE patch-tensorflow_workspace.bzl
+
 MAINTAINER=	amutu@amutu.com
 COMMENT=	Computation using data flow graphs for scalable machine learning
 
@@ -35,6 +38,8 @@ BAZEL_COPT=
 
 SHEBANG_LANG=	python
 SHEBANG_GLOB=	*.py
+
+.include <bsd.port.pre.mk>
 
 #clang has this check enabled by default,disable it
 #see: https://github.com/tensorflow/tensorflow/issues/8894
@@ -82,4 +87,4 @@ do-install:
 	cd ${WRKDIR}/tmp/${PORTNAME}-${PORTVERSION}.data/purelib && \
 		${COPYTREE_SHARE} . ${STAGEDIR}${PYTHON_SITELIBDIR}
 
-.include <bsd.port.mk>
+.include <bsd.port.post.mk>
