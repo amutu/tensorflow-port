@@ -36,6 +36,8 @@ BAZEL_COPT=
 SHEBANG_LANG=	python
 SHEBANG_GLOB=	*.py
 
+.include <bsd.port.pre.mk>
+
 #clang has this check enabled by default,disable it
 #see: https://github.com/tensorflow/tensorflow/issues/8894
 .if ${ARCH} == "i386"
@@ -82,4 +84,4 @@ do-install:
 	cd ${WRKDIR}/tmp/${PORTNAME}-${PORTVERSION}.data/purelib && \
 		${COPYTREE_SHARE} . ${STAGEDIR}${PYTHON_SITELIBDIR}
 
-.include <bsd.port.mk>
+.include <bsd.port.post.mk>
