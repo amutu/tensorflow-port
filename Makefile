@@ -7,8 +7,8 @@ DISTVERSIONPREFIX=	v
 CATEGORIES=	science python
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
 
-PATCH_SITES=	https://raw.githubusercontent.com/amutu/tensorflow-port/v1.2.0/files/
-PATCHFILES=	patch-WORKSPACE patch-tensorflow_workspace.bzl
+PATCH_SITES=	https://raw.githubusercontent.com/amutu/tensorflow-port/v${PORTVERSION}/files/
+PATCHFILES=	patch-WORKSPACE-${PORTVERSION} patch-tensorflow_workspace.bzl-${PORTVERSION}
 
 MAINTAINER=	amutu@amutu.com
 COMMENT=	Computation using data flow graphs for scalable machine learning
