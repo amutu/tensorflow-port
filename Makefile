@@ -7,7 +7,7 @@ DISTVERSIONPREFIX=	v
 CATEGORIES=	science python
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
 
-PATCH_SITES=	https://raw.githubusercontent.com/amutu/tensorflow-port/a730557780159372986f4fcae30f6e396d14060d/files/
+PATCH_SITES=	https://raw.githubusercontent.com/amutu/tensorflow-port/v1.2.0/files/
 PATCHFILES=	patch-WORKSPACE patch-tensorflow_workspace.bzl
 
 MAINTAINER=	amutu@amutu.com
