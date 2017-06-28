@@ -34,10 +34,6 @@ USE_GITHUB=	yes
 GH_TUPLE=	amutu:tensorflow_third_party:c528072:tf/tensorflow_third_party
 USES=		python:2.7+ shebangfix
 BAZEL_BOOT=	--output_user_root=${WRKSRC}/bazel_ot --batch
-BAZEL_COPT=
-
-SHEBANG_LANG=	python
-SHEBANG_GLOB=	*.py
 
 .include <bsd.port.pre.mk>
 
@@ -52,9 +48,7 @@ post-patch:
 	${REINPLACE_CMD} "s#bazel \([cf]\)#echo bazel ${BAZEL_BOOT} \1#g" \
 	configure && \
 	${REINPLACE_CMD} "s#tensorflow_third_party#${WRKSRC}/&#g" \
-	WORKSPACE && \
-	${REINPLACE_CMD} "s#tensorflow_third_party#${WRKSRC}/&#g" \
-	tensorflow/workspace.bzl)
+	WORKSPACE tensorflow/workspace.bzl)
 
 do-configure:
 	(cd ${WRKSRC} && ${SETENV} \
