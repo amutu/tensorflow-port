@@ -53,22 +53,22 @@ post-patch:
 do-configure:
 	(cd ${WRKSRC} && ${SETENV} \
 		PYTHON_BIN_PATH=${PYTHON_CMD} \
-	       	TF_NEED_MKL=N \
+		TF_NEED_MKL=N \
 		CC_OPT_FLAGS="${CFLAGS}" \
 		TF_NEED_GCP=N TF_NEED_HDFS=N \
 		TF_ENABLE_XLA=N \
-	       	TF_NEED_OPENCL=N \
+		TF_NEED_OPENCL=N \
 		TF_NEED_CUDA=N \
 		PYTHON_LIB_PATH="${PYTHON_SITELIBDIR}" \
 		TF_NEED_VERBS=N \
-	       	./configure)
+		./configure)
 
 do-build:
 	(cd ${WRKSRC} && bazel ${BAZEL_BOOT} info && \
 		bazel ${BAZEL_BOOT} build ${BAZEL_COPT} --config=opt \
 		//tensorflow/tools/pip_package:build_pip_package --verbose_failures)
 	(cd ${WRKSRC} && ${SETENV} TMPDIR=${WRKDIR} \
-	      	bazel-bin/tensorflow/tools/pip_package/build_pip_package \
+		bazel-bin/tensorflow/tools/pip_package/build_pip_package \
 		${WRKDIR}/whl)
 
 do-install:
