@@ -35,6 +35,8 @@ GH_TUPLE=	amutu:tensorflow_third_party:c528072:tf/tensorflow_third_party
 USES=		python:2.7+ shebangfix
 BAZEL_BOOT=	--output_user_root=${WRKSRC}/bazel_ot --batch
 
+SHEBANG_GLOB=   *.py
+
 .include <bsd.port.pre.mk>
 
 #clang has this check enabled by default,disable it
