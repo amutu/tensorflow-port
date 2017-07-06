@@ -7,8 +7,8 @@ DISTVERSIONPREFIX=	v
 CATEGORIES=	science python
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
 
-PATCH_SITES=	https://raw.githubusercontent.com/amutu/tensorflow-port/v${PORTVERSION}/files/
-PATCHFILES=	patch-WORKSPACE-${PORTVERSION} patch-tensorflow_workspace.bzl-${PORTVERSION}
+#PATCH_SITES=	https://raw.githubusercontent.com/amutu/tensorflow-port/v${PORTVERSION}/files/
+#PATCHFILES=	patch-WORKSPACE-${PORTVERSION} patch-tensorflow_workspace.bzl-${PORTVERSION}
 
 MAINTAINER=	amutu@amutu.com
 COMMENT=	Computation using data flow graphs for scalable machine learning
@@ -31,9 +31,13 @@ RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
 		${PYTHON_PKGNAMEPREFIX}werkzeug>=0.11.10:www/py-werkzeug
 
 USE_GITHUB=	yes
-GH_TUPLE=	amutu:tensorflow_third_party:c528072:tf/tensorflow_third_party
+GH_TUPLE=	amutu:tensorflow_third_party:c528072:tf/tensorflow_third_party \
+		amutu:tensorflow-port:514d3e0:patchs
 USES=		python:2.7+ shebangfix
 BAZEL_BOOT=	--output_user_root=${WRKSRC}/bazel_ot --batch
+
+EXTRA_PATCHES=	${WRKSRC_patchs}/files/patch-WORKSPACE \
+		${WRKSRC_patchs}/files/patch-tensorflow_workspace.bzl
 
 SHEBANG_GLOB=   *.py
 
