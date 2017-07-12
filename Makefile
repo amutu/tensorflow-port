@@ -28,13 +28,9 @@ RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
 		${PYTHON_PKGNAMEPREFIX}werkzeug>=0.11.10:www/py-werkzeug
 
 USE_GITHUB=	yes
-GH_TUPLE=	amutu:tensorflow_third_party:c528072:tf/tensorflow_third_party \
-		amutu:tensorflow-port:v${PORTVERSION}:patchs
+GH_TUPLE=	amutu:tensorflow_third_party:c528072:tf/tensorflow_third_party
 USES=		python:2.7+ shebangfix
 BAZEL_BOOT=	--output_user_root=${WRKSRC}/bazel_ot --batch
-
-EXTRA_PATCHES=	${WRKSRC_patchs}/files/patch-WORKSPACE \
-		${WRKSRC_patchs}/files/patch-tensorflow_workspace.bzl
 
 SHEBANG_GLOB=	*.py
 
