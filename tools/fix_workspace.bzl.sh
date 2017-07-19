@@ -1,2 +1,0 @@
-grep "^\ *name = " $1 | gsed '/"xsmm_avx",\|"farmhash",\|"six",\|"gtest",\|"gtest_main",\|"python_headers",\|"protobuf_clib",\|"protobuf_compiler",\|"grpc_cpp_plugin",\|"grpc_lib",\|"jsoncpp",\|"nanopb",\|"zlib",/d' |  gsed '/name/i\  native.local_repository(' | gsed '/name/a\ ' | gsed '/^ $/a\  )' | gsed '/)/a\ ' | gsed '/name = .*",/{h;n;g;s/name = "/path = "tensorflow_third_party\//;s/,//g}' | gsed 's/^ $//'
-grep -A 3 'bind' $1 | sed 's/--//'
