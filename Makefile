@@ -14,8 +14,7 @@ LICENSE=	APACHE20
 
 BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}wheel>=0.29.0:devel/py-wheel \
 		${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
-		bash:shells/bash \
-		bazel:devel/bazel_clang38
+		bash:shells/bash
 RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
 		${PYTHON_PKGNAMEPREFIX}markdown>=2.2.0:textproc/py-markdown \
 		${PYTHON_PKGNAMEPREFIX}bleach>=1.4.2:www/py-bleach \
@@ -35,6 +34,12 @@ BAZEL_BOOT=	--output_user_root=${WRKSRC}/bazel_ot --batch
 SHEBANG_GLOB=	*.py
 
 .include <bsd.port.pre.mk>
+
+.if ${OSREL:R} == "10"
+BUILD_DEPENDS+=	bazel:devel/bazel-clang38
+.else
+BUILD_DEPENDS+=	bazel:devel/bazel
+.endif
 
 #clang has this check enabled by default,disable it
 #see: https://github.com/tensorflow/tensorflow/issues/8894
