@@ -16,14 +16,21 @@ BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}wheel>=0.29.0:devel/py-wheel \
 		${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
 		bash:shells/bash
 RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
-		${PYTHON_PKGNAMEPREFIX}protobuf>=3.2.0:devel/py-protobuf
+		${PYTHON_PKGNAMEPREFIX}markdown>=2.6.8:textproc/py-markdown \
+		${PYTHON_PKGNAMEPREFIX}bleach>=1.4.2:www/py-bleach \
+		${PYTHON_PKGNAMEPREFIX}html5lib>=0.9999999:www/py-html5lib \
+		${PYTHON_PKGNAMEPREFIX}protobuf>=3.2.0:devel/py-protobuf \
+		${PYTHON_PKGNAMEPREFIX}wheel>=0.29.0:devel/py-wheel \
+		${PYTHON_PKGNAMEPREFIX}mock>=1.3.0:devel/py-mock \
+		${PYTHON_PKGNAMEPREFIX}six>=1.10.0:devel/py-six \
+		${PYTHON_PKGNAMEPREFIX}backports.weakref>=0:devel/py-backports.weakref \
+		${PYTHON_PKGNAMEPREFIX}werkzeug>=0.11.10:www/py-werkzeug
 
 USE_GITHUB=	yes
 USES=		python:2.7+ shebangfix
 BAZEL_BOOT=	--output_user_root=${WRKSRC}/bazel_ot --batch
-BAZEL_COPT=
+PLIST_SUB=	TF_PORT_VERSION=${PORTVERSION}
 
-SHEBANG_LANG=	python
 SHEBANG_GLOB=	*.py
 
 .include <bsd.port.pre.mk>
@@ -46,11 +53,11 @@ post-patch:
 do-configure:
 	(cd ${WRKSRC} && ${SETENV} \
 		PYTHON_BIN_PATH=${PYTHON_CMD} \
-	       	TF_NEED_MKL=N \
+		TF_NEED_MKL=N \
 		CC_OPT_FLAGS="${CFLAGS}" \
 		TF_NEED_GCP=N TF_NEED_HDFS=N \
 		TF_ENABLE_XLA=N \
-	       	TF_NEED_OPENCL=N \
+		TF_NEED_OPENCL=N \
 		TF_NEED_CUDA=N \
 		PYTHON_LIB_PATH="${PYTHON_SITELIBDIR}" \
 		TF_NEED_VERBS=N \
@@ -73,7 +80,7 @@ do-build:
 	(cd ${WRKSRC} && bazel ${BAZEL_BOOT} build ${BAZEL_COPT} --config=opt \
 		//tensorflow/tools/pip_package:build_pip_package --verbose_failures)
 	(cd ${WRKSRC} && ${SETENV} TMPDIR=${WRKDIR} \
-	      	bazel-bin/tensorflow/tools/pip_package/build_pip_package \
+		bazel-bin/tensorflow/tools/pip_package/build_pip_package \
 		${WRKDIR}/whl)
 
 do-install:
