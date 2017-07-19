@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	tensorflow
-PORTVERSION=	1.2.0
+PORTVERSION=	1.2.1
 DISTVERSIONPREFIX=	v
 CATEGORIES=	science python
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
@@ -29,7 +29,7 @@ SHEBANG_GLOB=	*.py
 .include <bsd.port.pre.mk>
 
 .if ${OSREL:R} == "10"
-BUILD_DEPENDS+=	bazel:devel/bazel_clang38
+BUILD_DEPENDS+=	bazel:devel/bazel-clang38
 .else
 BUILD_DEPENDS+=	bazel:devel/bazel
 .endif
