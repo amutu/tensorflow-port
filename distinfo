@@ -1,5 +1,5 @@
-TIMESTAMP = 1499846908
-SHA256 (tensorflow-tensorflow-v1.2.0_GH0.tar.gz) = 03dbf7548d1fc1c11ed58da5fa68616f795c819f868f43478cbcaa26abed374f
-SIZE (tensorflow-tensorflow-v1.2.0_GH0.tar.gz) = 14489600
-SHA256 (amutu-tensorflow_third_party-c528072_GH0.tar.gz) = 60ef19bdf5e7d0af05275a0ba29bc80c35368c83a2bfc10f61f7c60301ee236b
-SIZE (amutu-tensorflow_third_party-c528072_GH0.tar.gz) = 170855167
+TIMESTAMP = 1500437892
+SHA256 (tensorflow-tensorflow-v1.2.1_GH0.tar.gz) = f2baf09b1a9a0500907b4d5cb5473070b3ecede06ed6e8d1096873c91922fb9e
+SIZE (tensorflow-tensorflow-v1.2.1_GH0.tar.gz) = 14488674
+SHA256 (amutu-tensorflow_third_party-v1.2.1_GH0.tar.gz) = 69e8d2a14981aa5dd23f7217e5e4b97fc7109a105cd4329b97c2801a66fb6b09
+SIZE (amutu-tensorflow_third_party-v1.2.1_GH0.tar.gz) = 170852467

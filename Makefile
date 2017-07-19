@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	tensorflow
-PORTVERSION=	1.2.0
+PORTVERSION=	1.2.1
 DISTVERSIONPREFIX=	v
 CATEGORIES=	science python
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
@@ -16,7 +16,7 @@ BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}wheel>=0.29.0:devel/py-wheel \
 		${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
 		bash:shells/bash
 RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
-		${PYTHON_PKGNAMEPREFIX}markdown>=2.2.0:textproc/py-markdown \
+		${PYTHON_PKGNAMEPREFIX}markdown>=2.6.8:textproc/py-markdown \
 		${PYTHON_PKGNAMEPREFIX}bleach>=1.4.2:www/py-bleach \
 		${PYTHON_PKGNAMEPREFIX}html5lib>=0.9999999:www/py-html5lib \
 		${PYTHON_PKGNAMEPREFIX}protobuf>=3.2.0:devel/py-protobuf \
@@ -27,9 +27,10 @@ RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}numpy>=1.11.2:math/py-numpy \
 		${PYTHON_PKGNAMEPREFIX}werkzeug>=0.11.10:www/py-werkzeug
 
 USE_GITHUB=	yes
-GH_TUPLE=	amutu:tensorflow_third_party:c528072:tf/tensorflow_third_party
+GH_TUPLE=	amutu:tensorflow_third_party:v${PORTVERSION}:tf/tensorflow_third_party
 USES=		python:2.7+ shebangfix
 BAZEL_BOOT=	--output_user_root=${WRKSRC}/bazel_ot --batch
+PLIST_SUB=	TF_PORT_VERSION=${PORTVERSION}
 
 SHEBANG_GLOB=	*.py
 
